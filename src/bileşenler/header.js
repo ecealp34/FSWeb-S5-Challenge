@@ -11,6 +11,25 @@ const Header = (baslik, tarih, yazi) => {
   //    <span class="temp">{ yazi }</span>
   //  </div>
   //
+
+  const headerInfo = document.createElement("div");
+  headerInfo.classList.add("header");
+
+	const dateDiv = document.createElement("span");
+	dateDiv.classList.add("date");
+	dateDiv.textContent = `${tarih}`;
+  headerInfo.append(dateDiv);
+  
+  const baslikDiv = document.createElement("h1");
+	baslikDiv.textContent = `${baslik}`;
+  headerInfo.append(baslikDiv);
+
+  const yaziDiv = document.createElement("span");
+	yaziDiv.classList.add("temp")
+	yaziDiv.textContent = `${yazi}`;
+  headerInfo.append(yaziDiv);
+
+  return headerInfo;
 }
 
 const headerEkleyici = (secici) => {
@@ -24,6 +43,8 @@ const headerEkleyici = (secici) => {
   // İPUCU: querySelector bir string alabilir (bknz: querySelector("#wrapper")) 
   // fakat aynı zamanda bir değişken de alabilir (bknz: querySelector(secici))
  
-}
+  const headerSection = document.querySelector(secici);
+  headerSection.appendChild(Header("Challenge5", Date(), "Güzel!"));
+};
 
 export { Header, headerEkleyici }

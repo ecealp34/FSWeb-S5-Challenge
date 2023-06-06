@@ -1,3 +1,5 @@
+import axios from "axios"
+
 const Card = (makale) => {
   // GÖREV 5
   // ---------------------
@@ -17,9 +19,65 @@ const Card = (makale) => {
   //   </div>
   // </div>
   //
-}
 
-const cardEkleyici = (secici) => {
+  const card = document.createElement("div");
+  card.classList.add("card");
+
+  const headline = document.createElement("div");
+	headline.classList.add("headline");
+	headline.textContent = `${makale.anabaslik}`;
+  card.append(headline);
+
+  const authorDiv = document.createElement("div");
+	authorDiv.classList.add("author");
+  card.append(authorDiv);
+
+  const imgContainer = document.createElement("div");
+	imgContainer.classList.add("img-container");
+  authorDiv.append(imgContainer);
+  
+  const imgDiv = document.createElement("img");
+  imgDiv.setAttribute("src", `${makale.yazarFoto}`);
+  imgContainer.append(imgDiv);
+  
+  const nameDiv = document.createElement("span");
+	nameDiv.textContent = `${ makale.yazarAdi } tarafından` ;
+  authorDiv.append(nameDiv);
+  
+card.addEventListener("click", () => {
+  console.log(makale.anabaslik);
+});
+return card;
+};
+
+
+
+const cardEkleyici = (secici) => { 
+  const articleExample = {"id": "d03affc6-b06e-4b4a-9909-3981c7cb8389",
+                "anabaslik": "UI Frameworks: A Comparison, Which Made Our List? (Hint: Bootstrap is on it)",
+                "yazarFoto": "https://picsum.photos/510",
+                "yazarAdi": "MAX GOODBOYE" }
+
+  axios
+  .get("http://localhost:5001/api/makaleler")
+  .then((response) => {
+    console.log(response);
+  for(let i in response.data.makaleler) {
+    response.data.makaleler[i].map((article) => {
+    document.querySelector(secici).appendChild(Card(article)) 
+});
+}})
+  .catch((error) => {
+    console.log(error);
+  })
+  .finally(() => {
+    
+  })
+ 
+}
+ 
+  
+
   // GÖREV 6
   // ---------------------
   // Tek bağımsız değişkeni olarak bir css seçici alan bu fonksiyonu uygulayın.
@@ -28,6 +86,5 @@ const cardEkleyici = (secici) => {
   // Card bileşenini kullanarak yanıttaki her makale nesnesinden bir kart oluşturun.
   // Her cardı, fonksiyona iletilen seçiciyle eşleşen DOM'daki öğeye ekleyin.
   //
-}
 
 export { Card, cardEkleyici }
